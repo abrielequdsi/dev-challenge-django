@@ -8,11 +8,15 @@ from .serializers import InterestCalculatorSerializer
 
 class InterestCalculatorView(APIView):
     def post(self, request):
-        print(request.data)
         serializer = InterestCalculatorSerializer(data=request.data)
 
         if serializer.is_valid():
-            interestData = get_yearly_returns(**serializer.data, years=50)
+            initial_deposit = serializer.data["initialDeposit"]
+            monthly_deposit = serializer.data["monthlyDeposit"]
+            yearly_interest_rate = serializer.data["yearlyInterestRate"]
+
+            interestData = get_yearly_returns(initial_deposit, monthly_deposit, yearly_interest_rate, 50)
+
             return Response(interestData, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
