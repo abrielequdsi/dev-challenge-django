@@ -17,3 +17,16 @@ def get_monthly_returns(principal_deposit, monthly_deposit, monthly_interest_rat
         res.append(cur_return + monthly_deposit)
 
     return res
+
+
+def get_yearly_returns(principal_deposit, monthly_deposit, monthly_interest_rate, years):
+    '''
+    Calculate interest returns for each year
+    '''
+    monthly_returns = get_monthly_returns(principal_deposit, monthly_deposit, monthly_interest_rate, years*12)
+    res = [principal_deposit]
+    for year in range(1, years + 1):
+        cur_return = monthly_returns[year * 12]
+        res.append(cur_return)
+
+    return res
