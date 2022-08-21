@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import interest_data
-
+from .views import InterestCalculatorView
 
 urlpatterns = [
-    path('interest-data/', interest_data, name="interest_data"),
+    path('v1/interest-data/', InterestCalculatorView.as_view(), name="interest_data"),
 ]
