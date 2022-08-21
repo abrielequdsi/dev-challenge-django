@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import {
-    Heading,
-    Avatar,
-    Box,
-    Center,
-    Text,
-    Stack,
-    Button,
-    Link,
-    Badge,
-    useColorModeValue,
-    Grid,
-    GridItem,
-    Flex,
-    SimpleGrid,
-} from '@chakra-ui/react'
-import { Container } from '@chakra-ui/react'
+import { Box, Grid, GridItem } from '@chakra-ui/react'
 import DefaultLayout from './components/layouts/Default'
 import LineChart from './components/LineChart'
 import CalculatorHeading from './components/CalculatorHeading'
@@ -27,13 +11,6 @@ import { calculateInterestData } from './api/InterestAPI'
 import IInterestData from './types/Interest'
 
 const defaultTheme = extendTheme(theme)
-
-// Note: This is just for example purposes
-// should be replaced with real data from the server
-const mockInterestData = {
-    xAxis: [0, 1, 2, 3, 4, 5],
-    yAxis: [100, 150, 180, 210, 240, 350],
-}
 
 function App() {
     const parse = (val: string) => val.replace(/^\£ /, '')
