@@ -30,3 +30,16 @@ def get_yearly_returns(principal_deposit, monthly_deposit, monthly_interest_rate
         res.append(cur_return)
 
     return res
+
+
+def geometric_formula(principal_deposit, monthly_deposit, monthly_interest_rate, months):
+    '''
+    Calculate interest return at a single point in time in the future based on geometric_formula
+    '''
+    principal_deposit = float(principal_deposit)
+    monthly_deposit = float(monthly_deposit)
+    monthly_interest_rate = float(monthly_interest_rate) / 100
+
+    geometric_interest = monthly_deposit * (((1 + monthly_interest_rate)**months) - 1)/monthly_interest_rate
+    principal_interest = principal_deposit * ((1 + monthly_interest_rate)**months)
+    return geometric_interest + principal_interest
