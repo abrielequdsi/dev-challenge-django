@@ -1,45 +1,57 @@
 
-def get_monthly_returns(principal_deposit, monthly_deposit, monthly_interest_rate, months):
+def get_monthly_returns(initial_deposit, monthly_deposit, monthly_interest_rate, months):
     '''
     Calculate interest returns for each month
     '''
-    principal_deposit = float(principal_deposit)
+    initial_deposit = float(initial_deposit)
     monthly_deposit = float(monthly_deposit)
     monthly_interest_rate = float(monthly_interest_rate) / 100
 
-    res = [principal_deposit]
+    res = [initial_deposit]
 
+    cur_balance = initial_deposit
     for month in range(1, months + 1):
-        cur_balance = res[-1]
         # Interest formula only applied for current balance
         cur_return = cur_balance * (1 + monthly_interest_rate)
-        # Monthly deposit will only give a investment return on the next month
-        res.append(cur_return + monthly_deposit)
+        # Monthly deposit will only give an investment return on the next month
+        cur_balance = cur_return + monthly_deposit
+        res.append(round(cur_balance, 2))
 
     return res
 
 
-def get_yearly_returns(principal_deposit, monthly_deposit, monthly_interest_rate, years):
+def get_yearly_returns(initial_deposit, monthly_deposit, monthly_interest_rate, years):
     '''
     Calculate interest returns for each year
     '''
-    monthly_returns = get_monthly_returns(principal_deposit, monthly_deposit, monthly_interest_rate, years*12)
-    res = [principal_deposit]
-    for year in range(1, years + 1):
-        cur_return = monthly_returns[year * 12]
-        res.append(cur_return)
+    initial_deposit = float(initial_deposit)
+    monthly_deposit = float(monthly_deposit)
+    monthly_interest_rate = float(monthly_interest_rate) / 100
+
+    res = [initial_deposit]
+
+    cur_balance = initial_deposit
+    for month in range(1, years*12 + 1):
+        # Interest formula only applied for current balance
+        cur_return = cur_balance * (1 + monthly_interest_rate)
+        # Monthly deposit will only give an investment return on the next month
+        cur_balance = cur_return + monthly_deposit
+        if month % 12 == 0:
+            res.append(round(cur_balance, 2))
 
     return res
 
 
-def geometric_formula(principal_deposit, monthly_deposit, monthly_interest_rate, months):
+def geometric_formula(initial_deposit, monthly_deposit, monthly_interest_rate, months):
     '''
     Calculate interest return at a single point in time in the future based on geometric_formula
     '''
-    principal_deposit = float(principal_deposit)
+    initial_deposit = float(initial_deposit)
     monthly_deposit = float(monthly_deposit)
     monthly_interest_rate = float(monthly_interest_rate) / 100
 
     geometric_interest = monthly_deposit * (((1 + monthly_interest_rate)**months) - 1)/monthly_interest_rate
-    principal_interest = principal_deposit * ((1 + monthly_interest_rate)**months)
-    return geometric_interest + principal_interest
+
+    initial_interest = initial_deposit * ((1 + monthly_interest_rate)**months)
+
+    return geometric_interest + initial_interest
