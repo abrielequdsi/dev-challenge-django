@@ -1,9 +1,22 @@
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .utils import get_yearly_returns
 
-@require_POST
-@csrf_exempt
-def interest_data(request):
-    # Just an example! Should be replaced with real calculated data
-    return JsonResponse({'result': 1000})
+from .serializers import InterestCalculatorSerializer
+
+
+class InterestCalculatorView(APIView):
+    def post(self, request):
+        serializer = InterestCalculatorSerializer(data=request.data)
+
+        if serializer.is_valid():
+            initial_deposit = serializer.data["initialDeposit"]
+            monthly_deposit = serializer.data["monthlyDeposit"]
+            yearly_interest_rate = serializer.data["yearlyInterestRate"]
+
+            interestData = get_yearly_returns(initial_deposit, monthly_deposit, yearly_interest_rate, 50)
+
+            return Response(interestData, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
