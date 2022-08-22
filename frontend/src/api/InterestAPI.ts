@@ -17,8 +17,6 @@ const calculateInterestData = async (data: IInterestData): Promise<number[]> => 
         throw new Error(message)
     }
 
-    // Handle local storage
-
     const jsonRes = await response.json()
 
     return jsonRes

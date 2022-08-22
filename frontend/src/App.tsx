@@ -26,7 +26,6 @@ function App() {
         calculateInterestData(inputData)
             .then((data) => {
                 setInterestReturns(data)
-                console.log(data[data.length - 1])
             })
             .catch((err) => console.log(err))
     }, [inputData])
